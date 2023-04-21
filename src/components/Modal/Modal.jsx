@@ -6,6 +6,7 @@ export class Modal extends Component {
   componentDidMount() {
     window.addEventListener('keydown', this.handlePressESC);
   }
+  
   handlePressESC = e => {
     if (e.code === 'Escape') {
       this.props.closeModal();
