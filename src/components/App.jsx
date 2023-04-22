@@ -40,7 +40,7 @@ export function App() {
         position: 'top-center',
         duration: 1500,
       });
-  }, [endOfImage]);
+  }, [endOfImage, searchText]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -80,7 +80,7 @@ export function App() {
           setStatus(STATUS.REJECTED);
         });
     }
-  }, [searchText]);
+  }, [searchText, STATUS.PENDING, STATUS.REJECTED, STATUS.RESOLVED, currentPage, endOfImage]);
 
   useEffect(() => {
     if (currentPage === 1) return;
@@ -123,7 +123,7 @@ export function App() {
           setStatus(STATUS.REJECTED);
         });
     }
-  }, [currentPage]);
+  }, [currentPage, STATUS.PENDING, STATUS.REJECTED, STATUS.RESOLVED, endOfImage,searchText]);
 
   const loadMoreBtn = () => {
     setCurrentPage(prev => prev + 1);
