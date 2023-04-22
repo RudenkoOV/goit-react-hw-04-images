@@ -4,19 +4,19 @@ import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import { AppMain } from './App.styled';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getImages } from 'services/fetch';
 import { toast } from 'react-hot-toast';
 
-
-export function App() {
   const STATUS = {
   IDLE: 'idle',
   PENDING: 'pending',
   RESOLVED: 'resolved',
   REJECTED: 'rejected',
   };
-  
+
+export function App() {
+ 
   const [searchText, setSearchText] = useState('');
   const [images, setImages] = useState([]);
   const [status, setStatus] = useState(STATUS.IDLE);
@@ -33,7 +33,15 @@ export function App() {
   const closeModal = () => {
     setIsShowModal(false);
   };
-  
+
+  useEffect(() => {
+    if (searchText)
+      toast.success('Больше картинок не найдено.', {
+        position: 'top-center',
+        duration: 1500,
+      });
+  }, [endOfImage]);
+
   useEffect(() => {
     setCurrentPage(1);
     if (searchText) {
@@ -72,7 +80,7 @@ export function App() {
           setStatus(STATUS.REJECTED);
         });
     }
-  }, [searchText, STATUS.PENDING, STATUS.REJECTED, STATUS.RESOLVED, currentPage, endOfImage]);
+  }, [searchText]);
 
   useEffect(() => {
     if (currentPage === 1) return;
@@ -115,7 +123,7 @@ export function App() {
           setStatus(STATUS.REJECTED);
         });
     }
-  }, [currentPage, STATUS.PENDING, STATUS.REJECTED, STATUS.RESOLVED, endOfImage,searchText]);
+  }, [currentPage]);
 
   const loadMoreBtn = () => {
     setCurrentPage(prev => prev + 1);
@@ -131,12 +139,13 @@ export function App() {
     setIsShowModal(true);
   };
   const props = { status, currentPage, isShowModal, largeImgURL, closeModal, images, imageClick, isLoadMore, loadMoreBtn };
-  console.log(props);
   return (
+    <React.StrictMode>
     <AppMain>
       <Toaster />
       <Searchbar createSearchText={createSearchText} />
       <ImageGallery props={props} />
-    </AppMain>
+      </AppMain>
+      </React.StrictMode>
   );
 }
