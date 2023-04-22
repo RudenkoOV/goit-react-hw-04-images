@@ -33,15 +33,7 @@ export function App() {
   const closeModal = () => {
     setIsShowModal(false);
   };
-
-  useEffect(() => {
-    if (searchText)
-      toast.success('Больше картинок не найдено.', {
-        position: 'top-center',
-        duration: 1500,
-      });
-  }, [endOfImage, searchText]);
-
+  
   useEffect(() => {
     setCurrentPage(1);
     if (searchText) {
