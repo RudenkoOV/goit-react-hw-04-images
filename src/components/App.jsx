@@ -4,7 +4,7 @@ import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import { AppMain } from './App.styled';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getImages } from 'services/fetch';
 import { toast } from 'react-hot-toast';
 
@@ -15,9 +15,8 @@ import { toast } from 'react-hot-toast';
   REJECTED: 'rejected',
   };
 
-export function App() {
- 
-  const [searchText, setSearchText] = useState('');
+export function AppLogic({ searchText }) {
+  
   const [images, setImages] = useState([]);
   const [status, setStatus] = useState(STATUS.IDLE);
   const [isShowModal, setIsShowModal] = useState(false);
@@ -26,10 +25,6 @@ export function App() {
   const [isLoadMore, setIsLoadMore] = useState(true);
   const [endOfImage, setEndOfImage] = useState(false);
 
-    const createSearchText = searchText => {
-    setSearchText(searchText);
-    };
-  
   const closeModal = () => {
     setIsShowModal(false);
   };
@@ -139,13 +134,22 @@ export function App() {
     setIsShowModal(true);
   };
   const props = { status, currentPage, isShowModal, largeImgURL, closeModal, images, imageClick, isLoadMore, loadMoreBtn };
+  console.log(props);
+  return props;
+}
+
+export function App() {
+
+  const [searchText, setSearchText] = useState('');
+  const createSearchText = searchText => {
+    setSearchText(searchText);
+  };
+  
   return (
-    <React.StrictMode>
     <AppMain>
       <Toaster />
       <Searchbar createSearchText={createSearchText} />
-      <ImageGallery props={props} />
-      </AppMain>
-      </React.StrictMode>
+      <ImageGallery props={AppLogic({ searchText })} />
+    </AppMain>
   );
 }

@@ -9,6 +9,7 @@ import { toast } from 'react-hot-toast';
 
 export default function ImageGallery(props) { 
   const { status, currentPage, isShowModal, largeImgURL, closeModal, images, imageClick, isLoadMore, loadMoreBtn } = props.props;
+  console.log(props);
   const STATUS = {
   IDLE: 'idle',
   PENDING: 'pending',
