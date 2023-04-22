@@ -1,16 +1,19 @@
 import PropTypes from 'prop-types';
+import { Component } from 'react';
 import { GalleryItem, GalleryItemImage } from './ImageGalleryItem.styled';
 
-export default function ImageGalleryItem (props) {
+export default class ImageGalleryItem extends Component {
+  render() {
     return (
       <GalleryItem>
         <GalleryItemImage
-          src={props.webformatURL}
-          id={props.id}
-          alt={props.tags}
+          src={this.props.webformatURL}
+          id={this.props.id}
+          alt={this.props.tags}
         />
       </GalleryItem>
     );
+  }
 }
 
 ImageGalleryItem.propTypes = {

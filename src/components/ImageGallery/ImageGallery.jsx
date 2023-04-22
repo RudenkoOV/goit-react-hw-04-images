@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
@@ -40,6 +41,7 @@ export default function ImageGallery({ searchText }) {
     if (searchText) {
       setStatus(STATUS.PENDING);
       setIsLoadMore(true);
+      // console.log('fetch from texteffect, page =  ', currentPage);
       getImages(searchText, 1)
         .then(data => {
           if (data.totalHits === 0) {
@@ -53,6 +55,10 @@ export default function ImageGallery({ searchText }) {
             setStatus(STATUS.RESOLVED);
             setIsLoadMore(false);
             setEndOfImage(!endOfImage);
+            // toast.success('Больше картинок не найдено.', {
+            //   position: 'top-center',
+            //   duration: 1500,
+            // });
           }
           if (data.status === 'error') {
             return Promise.reject(data.message);
@@ -65,9 +71,11 @@ export default function ImageGallery({ searchText }) {
               largeImageURL,
             })
           );
-
+          // if (currentPage !== 1) {
+          //   setImages(prev => [...prev, ...imageArr]);
+          // } else {
           setImages(imageArr);
-      
+          // }
           setStatus(STATUS.RESOLVED);
         })
         .catch(() => {
@@ -81,7 +89,7 @@ export default function ImageGallery({ searchText }) {
     if (searchText) {
       setStatus(STATUS.PENDING);
       setIsLoadMore(true);
-
+      // console.log('fetch from pageeffect');
       getImages(searchText, currentPage)
         .then(data => {
           if (data.totalHits === 0) {
@@ -95,6 +103,10 @@ export default function ImageGallery({ searchText }) {
             setStatus(STATUS.RESOLVED);
             setIsLoadMore(false);
             setEndOfImage(!endOfImage);
+            // toast.success('Больше картинок не найдено.', {
+            //   position: 'top-center',
+            //   duration: 1500,
+            // });
           }
           if (data.status === 'error') {
             return Promise.reject(data.message);

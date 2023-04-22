@@ -38,6 +38,7 @@ const Searchbar = ({ createSearchText }) => {
 };
 
 export default Searchbar;
+
 Searchbar.propTypes = {
   createSearchText: PropTypes.func.isRequired,
 };
