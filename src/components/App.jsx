@@ -87,7 +87,6 @@ export function App() {
     if (searchText) {
       setStatus(STATUS.PENDING);
       setIsLoadMore(true);
-      // console.log('fetch from pageeffect');
       getImages(searchText, currentPage)
         .then(data => {
           if (data.totalHits === 0) {
